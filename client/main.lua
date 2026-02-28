@@ -13,7 +13,7 @@ AddEventHandler('onClientResourceStart', function(resourceName)
     end
 end)
 
-RegisterNetEvent('cbl:playerLoaded', function()
+RegisterNetEvent('cbl:setActiveCharacter', function()
     characterLoaded = true
 end)
 
@@ -112,21 +112,21 @@ KEYBINDS = {
 }
 
 exports("AddKeybind", function(id, key, pad, desc, keydownCb, keyupCb, global)
-	KEYBINDS:Add(id, key, pad, desc, keydownCb, keyupCb, global)
+	KEYBINDS.Add(id, key, pad, desc, keydownCb, keyupCb, global)
 end)
 
 exports("EnableKeys", function()
-	KEYBINDS:Enable()
+	KEYBINDS.Enable()
 end)
 
 exports("DisableKeys", function(keys)
-	KEYBINDS:Disable(keys)
+	KEYBINDS.Disable(keys)
 end)
 
 exports("IsKeyDisabled", function(key)
-	return KEYBINDS:IsDisabled(key)
+	return KEYBINDS.IsDisabled(key)
 end)
 
 exports("GetKeyLabel", function(id)
-	return KEYBINDS:GetKey(id)
+	return KEYBINDS.GetKey(id)
 end)
