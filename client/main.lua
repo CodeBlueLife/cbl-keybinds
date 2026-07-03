@@ -1,4 +1,4 @@
-characterLoaded = false
+local playerLoaded = false
 local disableAllKeys = false
 local disabledKeys = {}
 _registeredKeybinds = {}
@@ -13,12 +13,12 @@ AddEventHandler('onClientResourceStart', function(resourceName)
     end
 end)
 
-RegisterNetEvent('cbl:setActiveCharacter', function()
-    characterLoaded = true
+AddEventHandler('cbl:playerLoaded', function()
+    playerLoaded = true
 end)
 
 AddEventHandler('cbl:playerLogout', function()
-    characterLoaded = false
+    playerLoaded = false
 end)
 
 function KeyMappingAdd(id, data)
@@ -30,7 +30,7 @@ function KeyMappingAdd(id, data)
 end
 
 function KeyMappingTrigger(id, keyup)
-    if characterLoaded and not IsKeyDisabled(id) and _registeredKeybinds[id] then
+    if playerLoaded and not IsKeyDisabled(id) and _registeredKeybinds[id] then
         if keyup then
             if not _registeredKeybinds[id].global and _registeredKeybinds[id].keyupCb then
                 _registeredKeybinds[id].keyupCb()
@@ -112,15 +112,15 @@ KEYBINDS = {
 }
 
 exports("AddKeybind", function(id, key, pad, desc, keydownCb, keyupCb, global)
-	KEYBINDS:Add(id, key, pad, desc, keydownCb, keyupCb, global)
+	return KEYBINDS:Add(id, key, pad, desc, keydownCb, keyupCb, global)
 end)
 
 exports("EnableKeys", function()
-	KEYBINDS:Enable()
+	return KEYBINDS:Enable()
 end)
 
 exports("DisableKeys", function(keys)
-	KEYBINDS:Disable(keys)
+	return KEYBINDS:Disable(keys)
 end)
 
 exports("IsKeyDisabled", function(key)
